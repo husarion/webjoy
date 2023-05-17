@@ -1,0 +1,10 @@
+# Listen on localhost on the specified port
+:8080 {
+        root * /src
+
+        templates {
+                mime "application/javascript"
+        }
+
+        file_server
+}

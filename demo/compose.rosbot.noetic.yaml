@@ -1,0 +1,28 @@
+services:
+  webjoy:
+    image: husarion/webjoy
+    ports:
+      - 8080:8080
+
+  rosbridge-server:
+    image: husarion/rosbridge-server:noetic
+    ports:
+      - 9090:9090
+    environment:
+      - ROS_MASTER_URI=http://ros-master:11311
+    command: roslaunch --wait rosbridge_server rosbridge_websocket.launch
+
+  ros-master:
+    image: ros:noetic-ros-core
+    command: roscore
+
+  rosbot:
+    image: husarion/rosbot:noetic
+    tty: true
+    environment:
+      - ROS_MASTER_URI=http://ros-master:11311
+      - SERIAL_PORT=/dev/ttySERIAL
+    devices:
+      - /dev/ttySERIAL
+    command: roslaunch --wait rosbot_bringup rosbot_docker.launch
+

@@ -2,6 +2,8 @@
 
 Web-Based Joystick for Steering ROS-Enabled Mobile Robots
 
+![webjoy screenshot](src/assets/webjoy.png)
+
 ## Usage
 
 1. First run the `rosbridge-server` on the ROS 2 powered robot:

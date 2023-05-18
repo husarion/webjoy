@@ -14,12 +14,10 @@ x-cpu-config:
     - LIBGL_ALWAYS_SOFTWARE=1
 
 services:
-  rosbot-xl:
-    image: husarion/rosbot-xl-gazebo:humble
-    <<: [ *gpu-config ]
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    command: ros2 launch rosbot_xl_gazebo simulation.launch.py mecanum:=${MECANUM:-True}
+  webjoy:
+    image: husarion/webjoy
+    ports:
+      - 8080:8080
 
   rosbridge-server:
     image: husarion/rosbridge-server:humble
@@ -27,8 +25,9 @@ services:
       - 9090:9090
     command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 
-  webjoy:
-    build:
-      context: ..
-    ports:
-      - 8080:8080
+  rosbot-xl:
+    image: husarion/rosbot-xl-gazebo:humble
+    <<: [ *gpu-config ]
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    command: ros2 launch rosbot_xl_gazebo simulation.launch.py mecanum:=${MECANUM:-True}

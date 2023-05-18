@@ -1,0 +1,18 @@
+FROM node:19.9.0-buster AS frontend_builder
+
+WORKDIR /app
+
+COPY package.json .
+COPY package-lock.json .
+
+ENV NODE_PATH=/app/node_modules
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 8080
+
+ENV ROSBRIDGE_SERVER_HOST=
+
+CMD npm run dev 

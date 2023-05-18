@@ -1,0 +1,9 @@
+:8080 {
+	root * /src
+
+	templates {
+		mime "application/javascript"
+	}
+
+	file_server
+}

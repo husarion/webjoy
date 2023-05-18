@@ -14,7 +14,7 @@ FROM caddy:2.6.2-alpine
 
 WORKDIR /src
 
-COPY Caddyfile /etc/caddy/
+COPY Caddyfile.webserver /etc/caddy/Caddyfile
 COPY --from=frontend_builder /app/build /src
 
 EXPOSE 8080

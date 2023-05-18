@@ -19,7 +19,7 @@ And visit the webjoy UI: `http://<robot-or-pc-IP:8080`
 > 1. ROS 2 Humble
 > 
 > ```bash
-> docker run -rm -it --privileged husarion/rosbot:humble /flash-firmware.py /root/firmware.bin
+> docker run --rm -it --privileged husarion/rosbot:humble /flash-firmware.py /root/firmware.bin
 > ```
 > 
 > 2. ROS Noetic

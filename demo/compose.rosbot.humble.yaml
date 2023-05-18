@@ -1,0 +1,21 @@
+services:
+  webjoy:
+    image: husarion/webjoy
+    ports:
+      - 8080:8080
+
+  rosbridge-server:
+    image: husarion/rosbridge-server:humble
+    ports:
+      - 9090:9090
+    command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+
+  microros:
+    image: husarion/micro-ros-agent:humble
+    devices:
+      - /dev/ttySERIAL:/dev/ttyUSB0
+    command: ros2 run micro_ros_agent micro_ros_agent serial -D /dev/ttyUSB0 serial -b 576000 # -v6
+
+  rosbot:
+    image: husarion/rosbot:humble
+    command: ros2 launch rosbot_bringup bringup.launch.py

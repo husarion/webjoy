@@ -32,5 +32,3 @@ services:
       context: ..
     ports:
       - 8080:8080
-    environment:
-      - ROSBRIDGE_SERVER_HOST=10.5.10.123

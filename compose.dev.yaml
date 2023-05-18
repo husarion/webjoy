@@ -6,4 +6,4 @@ services:
       - ./src:/app/src
     network_mode: host
     environment:
-      - PREACT_APP_ROSBRIDGE_SERVER_HOST=10.5.10.163
+      - PREACT_APP_ROSBRIDGE_SERVER_HOST=${PREACT_APP_ROSBRIDGE_SERVER_HOST:-slam}

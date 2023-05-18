@@ -1,6 +1,8 @@
 node_modules
 README.md
-.git
+.git*
 LICENSE
-Dockerfile
+Dockerfile*
+compose*
+*.env
 demo

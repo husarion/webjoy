@@ -55,6 +55,6 @@ Visit the [demo](demo/) folder to find the usage examples.
 ## Creating a new release
 
 ```bash
-git tag v0.1.0 main
-git push origin v0.1.0 main
+git tag v0.2.0 main
+git push origin v0.2.0 main
 ```

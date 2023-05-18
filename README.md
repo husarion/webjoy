@@ -19,3 +19,10 @@ npm run dev
 ```
 npm run build
 ```
+
+## Creating a new release
+
+```
+git tag v0.0.1 main
+git push origin v0.0.1 main
+```

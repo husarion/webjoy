@@ -4,7 +4,6 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./src:/app/src
-    ports:
-      - 8080:8080
+    network_mode: host
     environment:
-      - ROSBRIDGE_SERVER_HOST=10.5.10.123
+      - PREACT_APP_ROSBRIDGE_SERVER_HOST=10.5.10.163

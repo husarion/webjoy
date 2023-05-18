@@ -2,14 +2,14 @@ import { h } from 'preact';
 import ROSLIB from "roslib";
 
 import { useState, useEffect, useRef } from 'preact/hooks';
-import { Flex, useMantineTheme, Kbd, Notification } from '@mantine/core';
+import { useMantineTheme, Kbd, Notification } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { Joystick } from 'react-joystick-component';
 
 
 const RosVelocityControl = () => {
   const velRef = useRef([0.0, 0.0]);
-  const [velocity, setVelocity] = useState([0.0, 0.0]); 
+  const [velocity, setVelocity] = useState([0.0, 0.0]);
   const [ros, setRos] = useState(null);
   const [cmdVelTopic, setCmdVelTopic] = useState(null);
   const [publishInterval, setPublishInterval] = useState(null);
@@ -52,19 +52,25 @@ const RosVelocityControl = () => {
   // ====================================
 
   useEffect(() => {
-    console.log(`process.env.NODE_ENV: ${ process.env.NODE_ENV }`);
+    console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 
-    let rosBridgeHost = `{{env "ROSBRIDGE_SERVER_HOST"}}`;
-    console.log(`ROSBRIDGE_SERVER_HOST=${rosBridgeHost}`);
-    console.log(`HOST={{.Host}}`);
+    let rosBridgeHost = "";
+    if (process.env.NODE_ENV === 'development') {
+      require("preact/debug");
+      rosBridgeHost = process.env.PREACT_APP_ROSBRIDGE_SERVER_HOST;
+    } else if (process.env.NODE_ENV === 'production') {
+      rosBridgeHost = `{{env "ROSBRIDGE_SERVER_HOST"}}`;
+    } else {
+      console.log("wrong process.env.NODE_ENV");
+    }
 
-    let url = `ws://{{.Host}}:9090`;
+    console.log(`RosBridgeHost=${rosBridgeHost}`);
 
-    // if (rosBridgeHost !== "") {
-    //   url = `ws://${rosBridgeHost}:9090`;
-    // }
+    let url = `ws://${window.location.hostname}:9090`;
 
-    console.log(`url=${url}`);
+    if (rosBridgeHost !== "") {
+      url = `ws://${rosBridgeHost}:9090`;
+    }
 
     const newRos = new ROSLIB.Ros({ url });
     setRos(newRos);
@@ -177,26 +183,22 @@ const RosVelocityControl = () => {
   }
 
   return (
-    <Flex
+
+    <div 
       ref={ref}
-      justify="center"
-      align="center"
-      direction="column"
-      gap="lg"
       style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
+        width: '100%',
+        maxWidth: '100%',
       }}
     >
-      <Notification style={noSelectStyle} title="Keyboard control" color="red" radius="lg" withCloseButton={false}>
+
+      {/* <Notification style={noSelectStyle} title="Keyboard control" color="red" radius="lg" withCloseButton={false}>
         <br />
         <Kbd>&nbsp;</Kbd><Kbd>w</Kbd><Kbd>&nbsp;</Kbd>
         <br />
         <Kbd>a</Kbd><Kbd>s</Kbd><Kbd>d</Kbd> 
         <br />
-      </Notification>
+      </Notification> */}
       <Joystick
         size={width}
         sticky={false}
@@ -208,7 +210,7 @@ const RosVelocityControl = () => {
         stop={handleStop}
         pos={{ x: -velocity[1], y: velocity[0] }}
       />
-    </Flex>
+    </div>
   );
 };
 
